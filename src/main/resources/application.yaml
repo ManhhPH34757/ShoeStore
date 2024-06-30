@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: ShoeStore
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;encrypt=true;trustServerCertificate=true;databaseName=ShoeStore
+    username: sa
+    password: nguyenmanh2707
+  jpa:
+    open-in-view: true
+    show-sql: true
