@@ -1,79 +1,126 @@
-<nav xmlns:th="http://www.thymeleaf.org" th:fragment="menu" id="sidebarMenu"
-     class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-    <div class="position-sticky pt-3">
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">
-                    <span data-feather="home"></span>
-                    Dashboard
+<nav xmlns:th="http://www.thymeleaf.org" th:fragment="menu" id="sidebarMenu">
+    <aside class="left-sidebar">
+        <!-- Sidebar scroll-->
+        <div>
+            <div class="brand-logo d-flex align-items-center justify-content-between">
+                <a  class="text-nowrap logo-img">
+                    <img th:src="@{/images/logos/logoShoe.png}" alt="" style="width: 40px" />
+                    <img src="https://th.bing.com/th/id/R.f2350a878883cc27908c70d097e107f0?rik=yTeMULeHuuDLXw&pid=ImgRaw&r=0" alt="" style="width: 100px" />
                 </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file"></span>
-                    Orders
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="shopping-cart"></span>
-                    Products
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="users"></span>
-                    Customers
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="bar-chart-2"></span>
-                    Reports
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="layers"></span>
-                    Integrations
-                </a>
-            </li>
-        </ul>
+                <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+                    <i class="ti ti-x fs-8"></i>
+                </div>
+            </div>
+            <!-- Sidebar navigation-->
+            <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+                <ul id="sidebarnav">
+                    <li class="nav-small-cap">
+                        <iconify-icon icon="solar:menu-dots-linear"  class="nav-small-cap-icon fs-4"></iconify-icon>
+                        <span class="hide-menu">Home</span>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" id="home" th:href="@{/home}" aria-expanded="false">
+                            <iconify-icon icon="solar:widget-add-line-duotone" ></iconify-icon>
+                            <span class="hide-menu">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <span class="sidebar-divider lg"></span>
+                    </li>
+                    <li class="nav-small-cap">
+                        <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
+                        <span class="hide-menu">TRANSACTION</span>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="./ui-buttons.html" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" id="Cart-Plus--Streamline-Solar" height="18" width="18"><desc>Cart Plus Streamline Icon: https://streamlinehq.com</desc><g id="Bold Duotone/Shopping Ecommerce/Cart Plus"><path id="Vector" fill="#737373" d="M0.2928 1.0156C0.4629 0.5319 0.9929 0.2776 1.4766 0.4477L1.8497 0.5788C2.6129 0.8471 3.2611 1.075 3.7712 1.3253C4.3167 1.5929 4.7844 1.9226 5.1362 2.4374C5.4852 2.9482 5.6293 3.5086 5.6958 4.1231C5.7256 4.3981 5.7413 4.7026 5.7496 5.0372H18.9185C21.0042 5.0372 22.8818 5.0372 23.4313 5.7516C23.9809 6.4659 23.766 7.5423 23.3364 9.6951L22.7177 12.6966C22.3276 14.5892 22.1326 15.5354 21.4496 16.0919C20.7666 16.6485 19.8005 16.6485 17.8681 16.6485H11.3038C7.8514 16.6485 6.1253 16.6485 5.0528 15.5173C3.9803 14.3861 3.902 13.1844 3.902 9.5431V6.3225C3.902 5.4066 3.9007 4.7936 3.8498 4.3229C3.8011 3.8731 3.7148 3.6485 3.6031 3.485C3.4941 3.3255 3.3286 3.1764 2.9533 2.9923C2.5536 2.7962 2.0105 2.6036 1.1841 2.3131L0.8607 2.1994C0.377 2.0293 0.1227 1.4993 0.2928 1.0156Z" stroke-width="1"></path><path id="Vector_2" fill="#000" d="M6.9976 19.8915C8.0231 19.8915 8.8544 20.7229 8.8544 21.7483S8.0231 23.6051 6.9976 23.6051S5.1408 22.7738 5.1408 21.7483S5.9721 19.8915 6.9976 19.8915Z" stroke-width="1"></path><path id="Vector_3" fill="#000" d="M18.1385 19.8915C19.164 19.8915 19.9953 20.7227 19.9953 21.7483C19.9953 22.7738 19.164 23.6051 18.1385 23.6051S16.2817 22.7738 16.2817 21.7483C16.2817 20.7227 17.113 19.8915 18.1385 19.8915Z" stroke-width="1"></path><path id="Vector_4" fill="#000" d="M14.7343 8.7506C14.7343 8.2378 14.3186 7.8222 13.8059 7.8222S12.8775 8.2378 12.8775 8.7506V10.2979H11.3302C10.8174 10.2979 10.4017 10.7136 10.4017 11.2263S10.8174 12.1547 11.3302 12.1547H12.8775V13.7021C12.8775 14.2148 13.2932 14.6305 13.8059 14.6305S14.7343 14.2148 14.7343 13.7021V12.1547H16.2817C16.7944 12.1547 17.2101 11.7391 17.2101 11.2263S16.7944 10.2979 16.2817 10.2979H14.7343V8.7506Z" stroke-width="1"></path></g></svg>
+                            <span class="hide-menu">Create Orders</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="./ui-alerts.html" aria-expanded="false">
+                            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" id="Task-List-Cash--Streamline-Ultimate" height="18" width="18"><desc>Task List Cash Streamline Icon: https://streamlinehq.com</desc><path d="m29 18.982 0 -8 -22 0 0 25.998 10 0.002" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="M35 16.982v-10a2 2 0 0 0 -2 -2h-8.896a6.658 6.658 0 0 0 -12.2 0H3a2 2 0 0 0 -2 2v34a2 2 0 0 0 2 2h16" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m13 16.982 10 0" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m13 22.982 10 0" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m13 28.982 6 0" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="M38 28.982h-4.066a2.684 2.684 0 0 0 -1 5.176l4.128 1.65a2.684 2.684 0 0 1 -1 5.174H32" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m35 42.982 0 -2" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m35 28.982 0 -2" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="M23 34.982a12 12 0 1 0 24 0 12 12 0 1 0 -24 0Z" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path></svg>
+<!--                            <iconify-icon icon="solar:danger-circle-line-duotone"></iconify-icon>-->
+                            <span class="hide-menu">List Orders</span>
+                        </a>
+                    </li>
+                    <li>
+                        <span class="sidebar-divider lg"></span>
+                    </li>
+                    <li class="nav-small-cap">
+                        <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
+                        <span class="hide-menu">PRODUCT</span>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" id="products" th:href="@{/products/}" aria-expanded="false">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="Footwear-Sneakers--Streamline-Ultimate" height="18" width="18"><desc>Footwear Sneakers Streamline Icon: https://streamlinehq.com</desc><path d="m10.041 15.694 12.795 4.57a1 1 0 0 1 0.663 0.941V23a0.5 0.5 0 0 1 -0.5 0.5H1a0.5 0.5 0 0 1 -0.5 -0.5v-6.5a1 1 0 0 1 1 -1h0.627a0.473 0.473 0 0 1 0.435 0.269C2.887 16.469 4.448 17 6 17c1.841 0 3.044 -0.466 3.394 -1.1a0.532 0.532 0 0 1 0.647 -0.206Z" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m0.499 21.5 23 0" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m12.074 16.42 -1.075 1.08" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m13.919 17.079 -0.92 0.921" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="M17.5 18.357a1.132 1.132 0 0 1 -1 1.143h-3A1.5 1.5 0 0 0 12 21v0.5" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="M3.5 21.5a3 3 0 0 0 -3 -3" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="M13.958 8.307 1.162 3.736A1 1 0 0 1 0.5 2.8V1A0.5 0.5 0 0 1 1 0.5h22a0.5 0.5 0 0 1 0.5 0.5v6.5a1 1 0 0 1 -1 1h-0.627a0.475 0.475 0 0 1 -0.435 -0.268C21.111 7.532 19.549 7 18 7c-1.842 0 -3.044 0.467 -3.394 1.1a0.533 0.533 0 0 1 -0.648 0.207Z" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m23.499 2.5 -23 0" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m11.923 7.58 1.076 -1.08" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="M10.077 6.921 10.999 6" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="M6.5 5.643a1.132 1.132 0 0 1 1 -1.143h3A1.5 1.5 0 0 0 12 3v-0.5" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="M20.5 2.5a3 3 0 0 0 3 3" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path></svg>
+                            <span class="hide-menu">Product</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" th:href="@{/brands/}" id="brands" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="Barcode-Scan--Streamline-Ultimate" height="18" width="18"><desc>Barcode Scan Streamline Icon: https://streamlinehq.com</desc><g><g><path d="M0.5 6.5v-2a1 1 0 0 1 1 -1h2" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="M3.5 20.5h-2a1 1 0 0 1 -1 -1v-2" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="M23.5 17.5v2a1 1 0 0 1 -1 1h-2" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="M20.5 3.5h2a1 1 0 0 1 1 1v2" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path></g><g><path d="m3.5 7.5 0 9" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m20.5 7.5 0 9" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m7.5 7.5 0 6" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m12.5 7.5 0 6" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m14.5 7.5 0 6" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m9.5 7.5 0 6" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m16.5 7.5 0 6" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m7.5 16.5 0 -1" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m5.5 7.5 0 6" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m5.5 16.5 0 -1" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m9.5 16.5 0 -1" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m12.5 16.5 0 -1" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m14.5 16.5 0 -1" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m16.5 16.5 0 -1" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m18.5 7.5 0 6" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path><path d="m18.5 16.5 0 -1" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path></g></g></svg>
+                            <span class="hide-menu">Brand</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" th:href="@{/categories/}" id="categories" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="-0.415 -0.415 20 20" id="Bullet-List-Sub-Category--Streamline-Ultimate" height="18" width="18"><desc>Bullet List Sub Category Streamline Icon: https://streamlinehq.com</desc><path stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M4.0846237875 4.7925H14.468397750000003" stroke-width="0.83"></path><path stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M6.0814987875 9.585H16.465272750000004" stroke-width="0.83"></path><path stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M8.07839775 14.377500000000001h10.383750000000001" stroke-width="0.83"></path><path stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M1.0273842000000002 4.472984025000001c-0.15975000000000003 0 -0.31950798750000003 0.15975000000000003 -0.31950798750000003 0.31950000000000006s0.1597579875 0.31950000000000006 0.31950798750000003 0.31950000000000006" stroke-width="0.83"></path><path stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M1.0274081625000002 4.472984025000001c0.15975000000000003 0 0.31950798750000003 0.15975000000000003 0.31950798750000003 0.31950000000000006s-0.1597579875 0.31950000000000006 -0.31950798750000003 0.31950000000000006" stroke-width="0.83"></path><path stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M2.8671770250000006 9.265420125c-0.15975000000000003 0 -0.31950000000000006 0.15975000000000003 -0.31950000000000006 0.31950000000000006s0.15975000000000003 0.31950000000000006 0.31950000000000006 0.31950000000000006" stroke-width="0.83"></path><path stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M2.8672009875000004 9.265420125c0.15975000000000003 0 0.31950798750000003 0.15975000000000003 0.31950798750000003 0.31950000000000006s-0.1597579875 0.31950000000000006 -0.31950798750000003 0.31950000000000006" stroke-width="0.83"></path><path stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M4.9027674375000005 14.058000000000002c-0.15975000000000003 0 -0.31950798750000003 0.15975000000000003 -0.31950798750000003 0.31950000000000006s0.1597579875 0.31950000000000006 0.31950798750000003 0.31950000000000006" stroke-width="0.83"></path><path stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M4.902791400000001 14.058000000000002c0.15975000000000003 0 0.31950798750000003 0.15975000000000003 0.31950798750000003 0.31950000000000006s-0.1597579875 0.31950000000000006 -0.31950798750000003 0.31950000000000006" stroke-width="0.83"></path></svg>
+                            <span class="hide-menu">Category</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" th:href="@{/materials/}" id="materials" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.375 -0.375 18 18" id="Steel-1--Streamline-Ultimate" height="18" width="18"><desc>Steel 1 Streamline Icon: https://streamlinehq.com</desc><defs></defs><title>steel-1</title><path d="M1.078125 14.015625a2.515625 2.515625 0 1 0 5.03125 0 2.515625 2.515625 0 1 0 -5.03125 0" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"></path><path d="M2.875 14.10546875a0.71875 0.71875 0 1 0 1.4375 0 0.71875 0.71875 0 1 0 -1.4375 0" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"></path><path d="M7.90625 14.10546875a0.71875 0.71875 0 1 0 1.4375 0 0.71875 0.71875 0 1 0 -1.4375 0" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"></path><path d="M12.84765625 14.10546875a0.71875 0.71875 0 1 0 1.4375 0 0.71875 0.71875 0 1 0 -1.4375 0" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"></path><path d="M1.078125 14.015625v-10.78125a2.515625 2.515625 0 0 1 5.03125 0v10.78125" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"></path><path d="M6.109375 14.015625a2.515625 2.515625 0 1 0 5.03125 0 2.515625 2.515625 0 1 0 -5.03125 0" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"></path><path d="M6.109375 14.015625v-10.78125a2.515625 2.515625 0 0 1 5.03125 0v10.78125" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"></path><path d="M11.140625 14.015625a2.515625 2.515625 0 1 0 5.03125 0 2.515625 2.515625 0 1 0 -5.03125 0" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"></path><path d="M11.140625 14.015625v-10.78125a2.515625 2.515625 0 0 1 5.03125 0v10.78125" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"></path></svg>
+                            <span class="hide-menu">Material</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" th:href="@{/soles/}" id="soles" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="-0.375 -0.375 18 18" id="Casino-Lucky-Horseshoe--Streamline-Ultimate" height="18" width="18"><desc>Casino Lucky Horseshoe Streamline Icon: https://streamlinehq.com</desc><path stroke="#000000" stroke-linecap="round" stroke-linejoin="round" d="M8.625 16.890625c1.8109625 0 3.547678125 -0.7193968749999999 4.828203125 -1.999921875C14.733728124999999 13.610178125000001 15.453125 11.8734625 15.453125 10.0625c0 0 0 -4.3125 -2.15625 -7.546875v-1.4375c0 -0.190626875 -0.07575625 -0.37344093749999996 -0.210521875 -0.50823315625C12.9515875 0.43510034375 12.7687375 0.359375 12.578125 0.359375h-2.15625c-0.1906125 0 -0.3734625 0.07572534375000001 -0.5082281249999999 0.21051684375000002C9.77888125 0.7046840625 9.703125 0.887498125 9.703125 1.078125v1.940625c0.00014375 0.13764781250000002 0.03981875 0.272363125 0.11428125 0.38812500000000005 1.1928375 1.7635681250000002 1.8955593750000002 3.8124656249999997 2.03621875 5.936875 0 1.796875 -1.44540625 3.953125 -3.228625 3.953125s-3.228625 -2.15625 -3.228625 -3.953125c0.141061875 -2.123690625 0.8437693749999999 -4.17176875 2.03621875 -5.93471875 0.07489375 -0.11638000000000001 0.11456875 -0.2519003125 0.11428125 -0.39028125V1.078125c0 -0.190626875 -0.07575625 -0.37344093749999996 -0.210521875 -0.50823315625C7.2015875000000005 0.43510034375 7.0187518749999995 0.359375 6.828125 0.359375h-2.15625c-0.190626875 0 -0.37344093749999996 0.07572534375000001 -0.5082353125 0.21051684375000002C4.0288525 0.7046840625 3.953125 0.887498125 3.953125 1.078125v1.4375C1.796875 5.75 1.796875 10.0625 1.796875 10.0625c0 1.8109625 0.7193896875000001 3.547678125 1.9999146875 4.828203125C5.0773075 16.171228125 6.81406625 16.890625 8.625 16.890625v0Z" stroke-width="0.75"></path><path stroke="#000000" stroke-linecap="round" stroke-linejoin="round" d="M3.953125 2.515625h2.15625" stroke-width="0.75"></path><path stroke="#000000" stroke-linecap="round" stroke-linejoin="round" d="M11.140625 2.515625h2.15625" stroke-width="0.75"></path><path stroke="#000000" d="M4.671875 5.2109375c-0.0992378125 0 -0.1796875 -0.0804496875 -0.1796875 -0.1796875s0.0804496875 -0.1796875 0.1796875 -0.1796875" stroke-width="0.75"></path><path stroke="#000000" d="M4.671875 5.2109375c0.0992378125 0 0.1796875 -0.0804496875 0.1796875 -0.1796875s-0.0804496875 -0.1796875 -0.1796875 -0.1796875" stroke-width="0.75"></path><path stroke="#000000" d="M3.59375 10.9609375c-0.0992378125 0 -0.1796875 -0.080428125 -0.1796875 -0.1796875s0.0804496875 -0.1796875 0.1796875 -0.1796875" stroke-width="0.75"></path><path stroke="#000000" d="M3.59375 10.9609375c0.0992378125 0 0.1796875 -0.080428125 0.1796875 -0.1796875s-0.0804496875 -0.1796875 -0.1796875 -0.1796875" stroke-width="0.75"></path><path stroke="#000000" d="M8.625 15.2734375c-0.099259375 0 -0.1796875 -0.080428125 -0.1796875 -0.1796875s0.080428125 -0.1796875 0.1796875 -0.1796875" stroke-width="0.75"></path><path stroke="#000000" d="M8.625 15.2734375c0.099259375 0 0.1796875 -0.080428125 0.1796875 -0.1796875s-0.080428125 -0.1796875 -0.1796875 -0.1796875" stroke-width="0.75"></path><g><path stroke="#000000" d="M13.65625 10.9609375c-0.099259375 0 -0.1796875 -0.080428125 -0.1796875 -0.1796875s0.080428125 -0.1796875 0.1796875 -0.1796875" stroke-width="0.75"></path><path stroke="#000000" d="M13.65625 10.9609375c0.099259375 0 0.1796875 -0.080428125 0.1796875 -0.1796875s-0.080428125 -0.1796875 -0.1796875 -0.1796875" stroke-width="0.75"></path></g><g><path stroke="#000000" d="M12.578125 5.2109375c-0.099259375 0 -0.1796875 -0.0804496875 -0.1796875 -0.1796875s0.080428125 -0.1796875 0.1796875 -0.1796875" stroke-width="0.75"></path><path stroke="#000000" d="M12.578125 5.2109375c0.099259375 0 0.1796875 -0.0804496875 0.1796875 -0.1796875s-0.080428125 -0.1796875 -0.1796875 -0.1796875" stroke-width="0.75"></path></g></svg>
+                            <span class="hide-menu">Sole</span>
+                        </a>
+                    </li>
+                    <li>
+                        <span class="sidebar-divider lg"></span>
+                    </li>
+                    <li class="nav-small-cap">
+                        <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
+                        <span class="hide-menu">AUTH</span>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+                            <iconify-icon icon="solar:login-3-line-duotone"></iconify-icon>
+                            <span class="hide-menu">Login</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
+                            <iconify-icon icon="solar:user-plus-rounded-line-duotone"></iconify-icon>
+                            <span class="hide-menu">Register</span>
+                        </a>
+                    </li>
+                    <li>
+                        <span class="sidebar-divider lg"></span>
+                    </li>
+                    <li class="nav-small-cap">
+                        <iconify-icon icon="solar:menu-dots-linear" class="nav-small-cap-icon fs-4"></iconify-icon>
+                        <span class="hide-menu">CUSTOMER</span>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="-0.375 -0.375 18 18" id="Customer-Retention-Cycle--Streamline-Ultimate" height="18" width="18"><desc>Customer Retention Cycle Streamline Icon: https://streamlinehq.com</desc><defs></defs><path d="M4.49146875 15.784468749999998A8.265625 8.265625 0 0 1 10.879 0.67059375" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"></path><path d="M12.75853125 1.4655312500000002A8.265625 8.265625 0 0 1 6.449343750000001 16.603125000000002" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"></path><path d="m1.92625 16.470875 2.5659375 -0.68784375 -0.68784375 -2.5659375" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"></path><path d="m15.32375 0.7791250000000001 -2.5659375 0.68784375 0.68784375 2.5659375" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"></path><path d="M6.3178125 5.99509375a2.4423125 2.4423125 0 1 0 4.884625 0 2.4423125 2.4423125 0 1 0 -4.884625 0" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"></path><path d="M12.5594375 12.1943125a3.9991250000000003 3.9991250000000003 0 0 0 -7.51453125 0" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"></path><path d="M7.04375 4.2564375c0.83303125 1.5481875 2.6830937500000003 1.73865625 4.1565312500000005 1.73865625" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.75"></path></svg>
+                            <span class="hide-menu">Customer</span>
+                        </a>
+                    </li>
+                </ul>
 
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-            <span>Saved reports</span>
-            <a class="link-secondary" href="#" aria-label="Add a new report">
-                <span data-feather="plus-circle"></span>
-            </a>
-        </h6>
-        <ul class="nav flex-column mb-2">
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file-text"></span>
-                    Current month
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file-text"></span>
-                    Last quarter
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file-text"></span>
-                    Social engagement
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file-text"></span>
-                    Year-end sale
-                </a>
-            </li>
-        </ul>
-    </div>
+            </nav>
+            <!-- End Sidebar navigation -->
+        </div>
+        <!-- End Sidebar scroll-->
+    </aside>
 
-    <link rel="stylesheet" th:href="@{/css/offline/layout/menu.css}">
-    <script th:src="@{/js/offline/layout/menu.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/offline/layout/sidebar.css}">
+
 </nav>

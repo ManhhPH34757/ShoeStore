@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shoe store - Your style</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplebar/6.2.7/simplebar.css"
+          integrity="sha512-08T4cwCCcdn+1J5Kne6cRZwBFGo11KAc8b9dk6vDFkdscSz9L/rVUGl+kbIT8zQbBGqxkYwjz+HoZNp6B8bA7A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/1.35.0/iconfont/tabler-icons.min.css"
+          integrity="sha512-tpsEzNMLQS7w9imFSjbEOHdZav3/aObSESAL1y5jyJDoICFF2YwEdAHOPdOr1t+h8hTzar0flphxR76pd0V1zQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/offline/styles.min.css}">
+    <link rel="stylesheet" th:href="@{/css/offline/layout/layouts.css}">
+    <link rel="stylesheet" th:href="@{/css/offline/icons/tabler-icons/tabler-icons.css}">
+
+    <link rel="icon" href="https://freesvg.org/img/1517505968.png" type="image/x-icon">
+</head>
+<body>
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+    <div th:replace="~{/offline/layout/menu::menu}"></div>
+    <div class="body-wrapper">
+        <div th:replace="~{/offline/layout/header::header}"></div>
+        <div class="body-wrapper-inner">
+            <div class="container-fluid">
+                <!--main-->
+                <main>
+                    <h5>Material</h5>
+                    <div class="card p-4">
+                        <form th:action="${material.id == null ? '/materials/create' : '/materials/update/' + material.id}" method="post" th:object="${material}">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group mt-3">
+                                        <label for="materialCode" ><strong>Material Code</strong></label>
+                                        <input type="text" class="form-control" id="materialCode" th:field="*{materialCode}">
+                                        <strong class="text-danger" style="font-size: 12px" th:if="${#fields.hasErrors('materialCode')}" th:errors="*{materialCode}"></strong>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group mt-3">
+                                        <label for="materialName"><strong>Material Name</strong></label>
+                                        <input type="text" class="form-control" id="materialName" th:field="*{materialName}">
+                                        <strong class="text-danger" style="font-size: 12px" th:if="${#fields.hasErrors('materialName')}" th:errors="*{materialName}"></strong>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <button class="btn btn-light-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <h3 class="text-center mt-3 mb-4 text-dark"><strong>LIST MATERIAL</strong></h3>
+                    <div class="mt-3 card border-danger p-3">
+                        <form th:action="@{/materials/filter}" method="post">
+                            <div class="row ps-5 p-1 ">
+                                <div class="col-5">
+                                    <div class="form-group">
+                                        <label><strong>Material Code</strong></label>
+                                        <input type="text" placeholder="Material Code" class="form-control" name="materialCodeSearch">
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="form-group">
+                                        <label><strong>Material Name</strong></label>
+                                        <input type="text" placeholder="Material Name" class="form-control" name="materialNameSearch">
+                                    </div>
+                                </div>
+                                <div class="col-2 mt-3">
+                                    <button class="btn btn-light-success">
+                                        Search <span data-feather="search"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div>
+
+                        <div class="card p-2">
+                            <table class="table table-striped table-hover text-center align-middle">
+                                <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Material Code</th>
+                                    <th>Material Name</th>
+                                    <th colspan="2">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="m,i : ${listMaterial}">
+                                    <td th:text="${i.index+1}"></td>
+                                    <td th:text="${m.materialCode}"></td>
+                                    <td th:text="${m.materialName}"></td>
+                                    <td class="action-cell">
+                                        <a th:href="@{/materials/{id}(id=${m.id})}" class="btn btn-light-secondary">Edit</a>
+                                        <a th:href="@{/materials/delete/{id}(id=${m.id})}" class="btn btn-light-danger" >Remove</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table d-flex justify-content-center mt-5">
+                            <ul style="display: flex">
+                                <li  th:if="${materiall.hasPrevious()}">
+                                    <a th:href="@{/materials/(page=${currentPage - 1}, size=${pageSize})}">Previous</a>
+                                </li>
+                                <li th:each="i : ${#numbers.sequence(1, materiall.totalPages)}"
+                                    th:classappend="${i == currentPage} ? 'active'">
+                                    <a th:href="@{/materials/(page=${i}, size=${pageSize})}" th:text="${i}">1</a>
+                                </li>
+                                <li  th:if="${materiall.hasNext()}">
+                                    <a th:href="@{/materials/(page=${currentPage + 1}, size=${pageSize})}">Next</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{/offline/layout/footer::footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.49.2/apexcharts.min.js" integrity="sha512-3BIgFs7OIA76S6nx4QMAiSPlGXgCN+eITFIY6q0q0sFPxkuVzVXy0Vp/yQfXP3wyf+DmRpHRzEw3fQc/yrhk4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplebar/6.2.7/simplebar.min.js" integrity="sha512-NkLfoy5pkmAKUxk/OXl9vi1PDSFnEEJ3bDFdX0ln1L0pto6jM7On0lLsjhNC62i2ifyXhPWjPpcGEXawBfErtQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+<script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+
+<script th:src="@{/js/offline/main.js}"></script>
+<script th:src="@{/js/offline/layout/menu/sidebarmenu.js}"></script>
+
+
+</body>
+</html>

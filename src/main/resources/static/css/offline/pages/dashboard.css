@@ -1,0 +1,24 @@
+.timeline-widget .timeline-item {
+    min-height: 70px;
+}
+.timeline-widget .timeline-item .timeline-time {
+    padding: 6px 16px 6px 0;
+    min-width: 90px;
+}
+.timeline-widget .timeline-item .timeline-badge-wrap .timeline-badge {
+    width: 12px;
+    height: 12px;
+    border-radius: 50px;
+    background-color: transparent;
+}
+.timeline-widget .timeline-item .timeline-badge-wrap .timeline-badge-border {
+    width: 1px;
+    height: 100%;
+    background-color: #e0e6eb;
+}
+.timeline-widget .timeline-item .timeline-desc {
+    padding: 6px 16px;
+}
+.timeline-widget .timeline-item .timeline-badge.badge-primary {
+    border: 2px solid #635bff;
+}

@@ -1,38 +1,42 @@
-.navbar-brand {
-    padding-top: .75rem;
-    padding-bottom: .75rem;
-    font-size: 1rem;
-    background-color: rgba(0, 0, 0, .25);
-    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
-}
-
-.navbar .navbar-toggler {
-    top: .25rem;
-    right: 1rem;
-}
-
-.navbar .form-control {
-    padding: .75rem 1rem;
-    border-width: 0;
-    border-radius: 0;
-}
-
-.form-control-dark {
-    color: #fff;
-    background-color: rgba(255, 255, 255, .1);
-    border-color: rgba(255, 255, 255, .1);
-}
-
-.form-control-dark:focus {
-    border-color: transparent;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
-}
-
-.fixed-header {
-    position: fixed;
-    top: 0;
+.app-header {
+    position: relative;
+    z-index: 50;
     width: 100%;
-    z-index: 1000; /* Đảm bảo header luôn ở trên các phần tử khác */
-    background-color: #343a40; /* Đảm bảo màu nền đồng nhất */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng để tách biệt header với nội dung */
+    background: #fff;
+    padding: 0 25px;
+    top: 0;
+}
+.app-header .container-fluid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+.app-header .navbar {
+    min-height: 72px;
+    padding: 0;
+}
+.app-header .navbar .navbar-nav .nav-item .nav-link {
+    padding: 8px 16px;
+    line-height: 72px;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    font-size: 20px;
+    z-index: 2;
+}
+.navbar-nav .dropdown-menu {
+    position: absolute;
+    min-width: 200px;
+}
+.navbar-nav .dropdown-menu .dropdown-item {
+    border-radius: 8px;
+}
+.notification {
+    content: "";
+    position: absolute;
+    top: 22px;
+    right: 9px;
+    width: 8px;
+    height: 8px;
 }
