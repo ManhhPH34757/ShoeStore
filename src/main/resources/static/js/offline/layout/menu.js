@@ -8,7 +8,7 @@
     // Lấy tất cả các phần tử có class "nav-link"
     const navLinks = document.querySelectorAll('.nav-link');
 
-// Thêm sự kiện click cho mỗi phần tử "nav-link"
+    // Thêm sự kiện click cho mỗi phần tử "nav-link"
     navLinks.forEach(link => {
         link.addEventListener('click', function () {
             // Loại bỏ class "active" ở tất cả các "nav-link"
@@ -18,5 +18,6 @@
             this.classList.add('active');
         });
     });
+
 })();
 

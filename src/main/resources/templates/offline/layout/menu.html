@@ -3,7 +3,7 @@
     <div class="position-sticky pt-3">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" aria-current="page" th:href="@{/home}">
+                <a id="dashboard" class="nav-link" aria-current="page" th:href="@{/home}">
                     <span data-feather="home"></span>
                     Dashboard
                 </a>
@@ -15,7 +15,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/products}">
+                <a id="product" class="nav-link" th:href="@{/products}">
                     <span data-feather="shopping-cart"></span>
                     Products
                 </a>
@@ -75,5 +75,5 @@
     </div>
 
     <link rel="stylesheet" th:href="@{/css/offline/layout/menu.css}">
-    <script th:src="@{/js/offline/layout/menu.js}"></script>
+
 </nav>
