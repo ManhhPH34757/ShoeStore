@@ -10,5 +10,4 @@ public class HomeController {
     public String homePage() {
         return "offline/index";
     }
-
 }

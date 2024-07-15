@@ -2,6 +2,7 @@
     position: relative;
     z-index: 50;
     width: 100%;
+<<<<<<< HEAD
     background: #fff;
     padding: 0 25px;
     top: 0;
@@ -39,4 +40,9 @@
     right: 9px;
     width: 8px;
     height: 8px;
+=======
+    z-index: 1000; /* Đảm bảo header luôn ở trên các phần tử khác */
+    background-color: #343a40; /* Đảm bảo màu nền đồng nhất */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng để tách biệt header với nội dung */
+>>>>>>> 7329112ce43c7d68a76f46d9c8dca18d50ad5e1a
 }
