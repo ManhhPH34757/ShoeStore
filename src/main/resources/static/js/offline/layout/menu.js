@@ -13,9 +13,8 @@
         link.addEventListener('click', function () {
             // Loại bỏ class "active" ở tất cả các "nav-link"
             navLinks.forEach(link => link.classList.remove('active'));
-
             // Thêm class "active" cho phần tử được click
-            this.classList.add('active');
+            this.classList.add('active');layout
         });
     });
 })();
