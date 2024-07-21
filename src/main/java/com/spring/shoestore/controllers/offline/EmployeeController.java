@@ -19,8 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.security.SecureRandom;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -32,6 +33,8 @@ public class EmployeeController {
     private final AccountAdminRepository accountAdminRepository;
 
     private final JavaMailSender emailSender;
+
+    private final AtomicInteger counter = new AtomicInteger(39);
 
     @Value("${app.default-password}")
     private String defaultPassword;
@@ -71,13 +74,20 @@ public class EmployeeController {
         Sort sort = Sort.by(Sort.Direction.DESC, "id");
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
 
-        model.addAttribute("listemployee", accountAdminRepository.findAll(pageable).getContent());
+        Page<AccountAdmin> pageResult = accountAdminRepository.findAll(pageable);
+
+        List<AccountAdminDTO> accountAdminDTOList = pageResult.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+
+        model.addAttribute("listemployee", accountAdminDTOList);
         model.addAttribute("pageNumber", pageNumber);
         model.addAttribute("pageSize", pageSize);
+        model.addAttribute("totalPages", pageResult.getTotalPages());
+        model.addAttribute("totalElements", pageResult.getTotalElements());
+
         return "offline/employees/listEmployess";
     }
-
-    private final AtomicInteger counter = new AtomicInteger(26);
 
     public String generateAdminCode() {
         int currentNumber = counter.incrementAndGet();
@@ -126,40 +136,19 @@ public class EmployeeController {
     }
 
     @GetMapping("/edit/{id}")
-    public ModelAndView editEmployee(@PathVariable Integer id, Model model,
-                                     @RequestParam(defaultValue = "0") Integer pageNumber,
-                                     @RequestParam(defaultValue = "5") Integer pageSize
-    ) {
-
-        if (pageNumber < 0) {
-            pageNumber = 0;
-        }
-        Sort sort = Sort.by(Sort.Direction.DESC, "id");
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
-
+    public String editEmployee(@PathVariable Integer id, Model model) {
         AccountAdmin accountAdmin = accountAdminRepository.findById(id).orElse(null);
-
-        AccountAdminDTO accountAdminDTO = new AccountAdminDTO();
-        accountAdminDTO.setId(accountAdmin.getId());
-        accountAdminDTO.setUserName(accountAdmin.getUserName());
-        accountAdminDTO.setStatus(accountAdmin.getStatus());
-        accountAdminDTO.setRole(accountAdmin.getRole());
-
-        Admin admin = accountAdmin.getIdAdmin();
-        if (admin != null) {
-            accountAdminDTO.setFirstName(admin.getFirstName());
-            accountAdminDTO.setLastName(admin.getLastName());
-            accountAdminDTO.setEmail(admin.getEmail());
-            accountAdminDTO.setAddress(admin.getAddress());
-            accountAdminDTO.setPhoneNumber(admin.getPhoneNumber());
-            accountAdminDTO.setBirthday(String.valueOf(admin.getBirthday()));
-            accountAdminDTO.setGender(admin.getGender());
+        if (accountAdmin == null) {
+            return "redirect:/employees/";
         }
+
+        AccountAdminDTO accountAdminDTO = convertToDTO(accountAdmin);
 
         model.addAttribute("employee", accountAdminDTO);
-        model.addAttribute("listemployee", accountAdminRepository.findAll(pageable).getContent());
-        return new ModelAndView("offline/employees/listEmployess");
+
+        return "offline/employees/listEmployess";
     }
+
 
 
     @GetMapping("/delete/{id}")
@@ -184,7 +173,8 @@ public class EmployeeController {
             admin.setEmail(accountAdminDTO.getEmail());
             admin.setAddress(accountAdminDTO.getAddress());
             admin.setPhoneNumber(accountAdminDTO.getPhoneNumber());
-            admin.setBirthday(LocalDate.parse((accountAdminDTO.getBirthday())));
+            admin.setBirthday(accountAdminDTO.getBirthday() != null ? LocalDate.parse(accountAdminDTO.getBirthday()) : null);
+            admin.setGender(accountAdminDTO.getGender());
         }
 
         accountAdmin.setUserName(accountAdminDTO.getUserName());
@@ -196,76 +186,53 @@ public class EmployeeController {
 
         return "redirect:/employees/";
     }
-//    @GetMapping("/filter")
-//    public String filterEmployees(
-//            @RequestParam(value = "userName", required = false) String userName,
-//            @RequestParam(value = "role", required = false) String role,
-//            @RequestParam(value = "status", required = false) String status,
-//            @RequestParam(defaultValue = "0") Integer pageNumber,
-//            @RequestParam(defaultValue = "5") Integer pageSize,
-//            Model model
-//    ) {
-//        // Xử lý trang và sắp xếp
-//        if (pageNumber < 0) {
-//            pageNumber = 0;
-//        }
-//        Sort sort = Sort.by(Sort.Direction.DESC, "id");
-//        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
-//
-//        // Lọc dữ liệu
-//        Page<AccountAdmin> pageResult;
-//
-//        if (userName != null && !userName.isEmpty()) {
-//            pageResult = accountAdminRepository.findByUserNameContaining(userName, pageable);
-//        } else if (role != null && !role.isEmpty()) {
-//            pageResult = accountAdminRepository.findByRole(role, pageable);
-//        } else if (status != null && !status.isEmpty()) {
-//            pageResult = accountAdminRepository.findByStatus(status, pageable);
-//        } else {
-//            pageResult = accountAdminRepository.findAll(pageable);
-//        }
-//
-//        // Chuyển đổi dữ liệu sang DTO
-//        List<AccountAdminDTO> accountAdminDTOList = pageResult.stream()
-//                .map(this::convertToDTO)
-//                .collect(Collectors.toList());
-//
-//        // Thêm dữ liệu vào mô hình
-//        model.addAttribute("listemployee", accountAdminDTOList);
-//        model.addAttribute("pageNumber", pageNumber);
-//        model.addAttribute("pageSize", pageSize);
-//        model.addAttribute("totalPages", pageResult.getTotalPages());
-//        model.addAttribute("totalElements", pageResult.getTotalElements());
-//
-//        return "offline/employees/listEmployess";
-//    }
-//
-//    private AccountAdminDTO convertToDTO(AccountAdmin accountAdmin) {
-//        if (accountAdmin == null) {
-//            // Logging thông báo lỗi
-//            System.err.println("AccountAdmin object is null.");
-//            return null;
-//        }
-//
-//        AccountAdminDTO dto = new AccountAdminDTO();
-//        dto.setId(accountAdmin.getId());
-//        dto.setUserName(accountAdmin.getUserName());
-//        dto.setStatus(accountAdmin.getStatus());
-//        dto.setRole(accountAdmin.getRole());
-//
-//        if (accountAdmin.getIdAdmin() != null) {
-//            dto.setFirstName(accountAdmin.getIdAdmin().getFirstName());
-//            dto.setLastName(accountAdmin.getIdAdmin().getLastName());
-//            dto.setEmail(accountAdmin.getIdAdmin().getEmail());
-//            dto.setAddress(accountAdmin.getIdAdmin().getAddress());
-//            dto.setPhoneNumber(accountAdmin.getIdAdmin().getPhoneNumber());
-//            dto.setBirthday(accountAdmin.getIdAdmin().getBirthday() != null ? accountAdmin.getIdAdmin().getBirthday().toString() : null);
-//            dto.setGender(accountAdmin.getIdAdmin().getGender());
-//        } else {
-//            // Logging thông báo lỗi
-//            System.err.println("IdAdmin object is null for AccountAdmin ID: " + accountAdmin.getId());
-//        }
-//        return dto;
-//    }
+
+    @GetMapping("/filter")
+    public String filterEmployees(
+            @RequestParam(value = "userName", required = false) String userName,
+            @RequestParam(value = "role", required = false) String role,
+            @RequestParam(value = "status", required = false) String status,
+            Model model
+    ) {
+        List<AccountAdmin> filteredAccounts = accountAdminRepository.filterByCriteria(userName, role, status);
+
+        List<AccountAdminDTO> accountAdminDTOList = filteredAccounts.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+
+        model.addAttribute("listemployee", accountAdminDTOList);
+        model.addAttribute("userName", userName);
+        model.addAttribute("role", role);
+        model.addAttribute("status", status);
+
+        return "offline/employees/listEmployess";
+    }
+
+
+    private AccountAdminDTO convertToDTO(AccountAdmin accountAdmin) {
+        if (accountAdmin == null) {
+            return null;
+        }
+
+        AccountAdminDTO dto = new AccountAdminDTO();
+        dto.setId(accountAdmin.getId());
+        dto.setUserName(accountAdmin.getUserName());
+        dto.setStatus(accountAdmin.getStatus());
+        dto.setRole(accountAdmin.getRole());
+
+        Admin admin = accountAdmin.getIdAdmin();
+        if (admin != null) {
+            dto.setFirstName(admin.getFirstName());
+            dto.setLastName(admin.getLastName());
+            dto.setEmail(admin.getEmail());
+            dto.setAddress(admin.getAddress());
+            dto.setPhoneNumber(admin.getPhoneNumber());
+            dto.setBirthday(admin.getBirthday() != null ? admin.getBirthday().toString() : null);
+            dto.setGender(admin.getGender());
+        }
+
+        return dto;
+    }
+
 
 }
