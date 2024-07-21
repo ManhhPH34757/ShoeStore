@@ -2,7 +2,7 @@ spring:
   application:
     name: ShoeStore
   datasource:
-    url: jdbc:sqlserver://localhost:1433;encrypt=true;trustServerCertificate=true;databaseName=ShoeStore
+    url: jdbc:sqlserver://localhost:1433;encrypt=true;trustServerCertificate=true;databaseName=ShoeStore2
     username: sa
     password: 123456
   jpa:

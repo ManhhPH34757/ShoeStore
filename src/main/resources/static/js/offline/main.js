@@ -1,33 +1,186 @@
-/* globals Chart:false, feather:false */
 
-(function () {
-    'use strict'
+$(function () {
+    // Admin Panel settings
 
-    feather.replace({'aria-hidden': 'true'})
-
-    // Graphs
-    let ctx = document.getElementById('myChart')
-    // eslint-disable-next-line no-unused-vars
-    let myChart = new Chart(ctx, {
-        type: 'line', data: {
-            labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], datasets: [{
-                data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
-                lineTension: 0,
-                backgroundColor: 'transparent',
-                borderColor: '#007bff',
-                borderWidth: 4,
-                pointBackgroundColor: '#007bff'
-            }]
-        }, options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: false
-                    }
-                }]
-            }, legend: {
-                display: false
-            }
+    //****************************
+    /* This is for the mini-sidebar if width is less then 1170*/
+    //****************************
+    var setsidebartype = function () {
+        var width =
+            window.innerWidth > 0 ? window.innerWidth : this.screen.width;
+        if (width < 1199) {
+            $("#main-wrapper").attr("data-sidebartype", "mini-sidebar");
+            $("#main-wrapper").addClass("mini-sidebar");
+        } else {
+            $("#main-wrapper").attr("data-sidebartype", "full");
+            $("#main-wrapper").removeClass("mini-sidebar");
         }
-    })
-})();
+    };
+    $(window).ready(setsidebartype);
+    $(window).on("resize", setsidebartype);
+    //****************************
+    /* This is for sidebartoggler*/
+    //****************************
+    $(".sidebartoggler").on("click", function () {
+        $("#main-wrapper").toggleClass("mini-sidebar");
+        if ($("#main-wrapper").hasClass("mini-sidebar")) {
+            $(".sidebartoggler").prop("checked", !0);
+            $("#main-wrapper").attr("data-sidebartype", "mini-sidebar");
+        } else {
+            $(".sidebartoggler").prop("checked", !1);
+            $("#main-wrapper").attr("data-sidebartype", "full");
+        }
+    });
+    $(".sidebartoggler").on("click", function () {
+        $("#main-wrapper").toggleClass("show-sidebar");
+    });
+})
+
+$(function () {
+
+
+    // -----------------------------------------------------------------------
+    // Subscriptions
+    // -----------------------------------------------------------------------
+    var chart = {
+        series: [
+            {
+                name: "2024",
+                data: [1.2, 2.7, 1, 3.6, 2.1, 2.7, 2.2, 1.3, 2.5],
+            },
+            {
+                name: "2023",
+                data: [-2.8, -1.1, -2.5, -1.5, -2.3, -1.9, -1, -2.1, -1.3],
+            },
+        ],
+        chart: {
+            toolbar: {
+                show: false,
+            },
+            type: "bar",
+            fontFamily: "inherit",
+            foreColor: "#adb0bb",
+            height: 270,
+            stacked: true,
+            offsetX: -15,
+        },
+        colors: ["var(--bs-primary)", "var(--bs-danger)"],
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                barHeight: "60%",
+                columnWidth: "15%",
+                borderRadius: [6],
+                borderRadiusApplication: "end",
+                borderRadiusWhenStacked: "all",
+            },
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        legend: {
+            show: false,
+        },
+        grid: {
+            show: true,
+            padding: {
+                top: 0,
+                bottom: 0,
+                right: 0,
+            },
+            borderColor: "rgba(0,0,0,0.05)",
+            xaxis: {
+                lines: {
+                    show: true,
+                },
+            },
+            yaxis: {
+                lines: {
+                    show: true,
+                },
+            },
+        },
+        yaxis: {
+            min: -5,
+            max: 5,
+        },
+        xaxis: {
+            axisBorder: {
+                show: false,
+            },
+            axisTicks: {
+                show: false,
+            },
+            categories: [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "July",
+                "Aug",
+                "Sep",
+            ],
+            labels: {
+                style: { fontSize: "13px", colors: "#adb0bb", fontWeight: "400" },
+            },
+        },
+        yaxis: {
+            tickAmount: 4,
+        },
+        tooltip: {
+            theme: "dark",
+        },
+    };
+
+    var chart = new ApexCharts(
+        document.querySelector("#revenue-forecast"),
+        chart
+    );
+    chart.render();
+
+
+    // -----------------------------------------------------------------------
+    // Total Income
+    // -----------------------------------------------------------------------
+    var customers = {
+        chart: {
+            id: "sparkline3",
+            type: "line",
+            fontFamily: "inherit",
+            foreColor: "#adb0bb",
+            height: 60,
+            sparkline: {
+                enabled: true,
+            },
+            group: "sparklines",
+        },
+        series: [
+            {
+                name: "Income",
+                color: "var(--bs-danger)",
+                data: [30, 25, 35, 20, 30, 40],
+            },
+        ],
+        stroke: {
+            curve: "smooth",
+            width: 2,
+        },
+        markers: {
+            size: 0,
+        },
+        tooltip: {
+            theme: "dark",
+            fixed: {
+                enabled: true,
+                position: "right",
+            },
+            x: {
+                show: false,
+            },
+        },
+    };
+    new ApexCharts(document.querySelector("#total-income"), customers).render();
+
+})

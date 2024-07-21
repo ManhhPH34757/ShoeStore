@@ -1,0 +1,141 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shoe store - Your style</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplebar/6.2.7/simplebar.css"
+          integrity="sha512-08T4cwCCcdn+1J5Kne6cRZwBFGo11KAc8b9dk6vDFkdscSz9L/rVUGl+kbIT8zQbBGqxkYwjz+HoZNp6B8bA7A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/1.35.0/iconfont/tabler-icons.min.css"
+          integrity="sha512-tpsEzNMLQS7w9imFSjbEOHdZav3/aObSESAL1y5jyJDoICFF2YwEdAHOPdOr1t+h8hTzar0flphxR76pd0V1zQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/offline/styles.min.css}">
+    <link rel="stylesheet" th:href="@{/css/offline/layout/layouts.css}">
+    <link rel="stylesheet" th:href="@{/css/offline/icons/tabler-icons/tabler-icons.css}">
+</head>
+<body>
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+    <div th:replace="~{/offline/layout/menu::menu}"></div>
+    <div class="body-wrapper">
+        <div th:replace="~{/offline/layout/header::header}"></div>
+        <div class="body-wrapper-inner">
+            <div class="container-fluid">
+                <main>
+                    <h5>Category Information</h5>
+                    <form th:action="${category.id == null ? '/categorys/create' : '/categorys/update/' + category.id}" method="post" th:object="${category}">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group mt-3">
+                                    <label for="categoryCode">Category Code</label>
+                                    <input type="text" class="form-control" th:field="*{categoryCode}" id="categoryCode">
+                                    <strong class="text-danger" style="font-size: 12px" th:if="${#fields.hasErrors('categoryCode')}" th:errors="*{categoryCode}"></strong>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <label for="categoryName">Category Name</label>
+                                    <input type="text" class="form-control" th:field="*{categoryName}" id="categoryName">
+                                    <strong class="text-danger" style="font-size: 12px" th:if="${#fields.hasErrors('categoryName')}" th:errors="*{categoryName}"></strong>
+                                </div>
+                                <div class="form-group mt-3">
+                                    <button class="btn btn-secondary">Submit</button>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group mt-3">
+                                    <label for="description">Description</label>
+                                    <input type="text" class="form-control" th:field="*{description}" id="description">
+                                    <strong class="text-danger" style="font-size: 12px" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></strong>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div>
+                        <h3 class="text-center mt-3">List Category</h3>
+                        <table class="table table-striped table-bordered table-hover mt-3 text-center align-middle">
+                            <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Category Code</th>
+                                <th>Category Name</th>
+                                <th>Description</th>
+                                <th colspan="2">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="ct,i : ${listCategory}">
+                                <td th:text="${i.index+1}"></td>
+                                <td th:text="${ct.categoryCode}"></td>
+                                <td th:text="${ct.categoryName}"></td>
+                                <td th:text="${ct.description}"></td>
+                                <td>
+                                    <a th:href="@{/categorys/{id}(id=${ct.id})}" class="btn btn-warning">Edit</a>
+                                    <a th:href="@{/categorys/delete/{id}(id=${ct.id})}" class="btn btn-danger">Remove</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table d-flex justify-content-center mt-5">
+                        <ul style="display: flex">
+                            <li th:if="${listCategorys.hasPrevious()}">
+                                <a th:href="@{/categorys/(page=${currentPage - 1}, size=${pageSize})}">Previous</a>
+                            </li>
+                            <li th:each="i : ${#numbers.sequence(1, listCategorys.totalPages)}"
+                                th:classappend="${i == currentPage} ? 'active'">
+                                <a th:href="@{/categorys/(page=${i}, size=${pageSize})}" th:text="${i}">1</a>
+                            </li>
+                            <li th:if="${listCategorys.hasNext()}">
+                                <a th:href="@{/categorys/(page=${currentPage + 1}, size=${pageSize})}">Next</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mt-3 card border-danger p-3">
+                        <form th:action="@{/categorys/filter}" method="post">
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label>Category Code</label>
+                                        <input type="text" placeholder="Category Code" class="form-control" name="categoryCodeSearch">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label>Category Name</label>
+                                        <input type="text" placeholder="Category Name" class="form-control" name="categoryNameSearch">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-group">
+                                        <label>Description</label>
+                                        <input type="text" placeholder="Description" class="form-control" name="productNameSearch">
+                                    </div>
+                                </div>
+                                <div class="col-2 mt-3">
+                                    <button class="btn btn-outline-success">
+                                        Search <span data-feather="search"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="~{/offline/layout/footer::footer}"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.49.2/apexcharts.min.js" integrity="sha512-3BIgFs7OIA76S6nx4QMAiSPlGXgCN+eITFIY6q0q0sFPxkuVzVXy0Vp/yQfXP3wyf+DmRpHRzEw3fQc/yrhk4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplebar/6.2.7/simplebar.min.js" integrity="sha512-NkLfoy5pkmAKUxk/OXl9vi1PDSFnEEJ3bDFdX0ln1L0pto6jM7On0lLsjhNC62i2ifyXhPWjPpcGEXawBfErtQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+<script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+
+<script th:src="@{/js/offline/main.js}"></script>
+<script th:src="@{/js/offline/layout/sidebar/sidebarmenu.js}"></script> <!--Xu li active sau-->
+</body>
+</html>

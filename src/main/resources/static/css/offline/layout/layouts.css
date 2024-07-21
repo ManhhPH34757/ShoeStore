@@ -1,0 +1,36 @@
+.page-wrapper {
+    position: relative;
+}
+.body-wrapper {
+    position: relative;
+    border-radius: 20px;
+}
+.body-wrapper .body-wrapper-inner {
+    margin-top: 80px;
+    border-radius: 20px !important;
+    margin-bottom: 30px;
+    background: #f4f7fb;
+    min-height: calc(100vh - 110px);
+    margin-left: calc(24px / 2);
+    margin-right: calc(24px / 2);
+}
+.body-wrapper .container-fluid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+    transition: 0.2s ease-in;
+}
+.simplebar-scrollbar:before {
+    background: rgba(0, 0, 0, 0.5) !important;
+}
+#main-wrapper[data-layout="vertical"][data-sidebar-position="fixed"] .left-sidebar {
+    position: fixed;
+    top: 0;
+}
+#main-wrapper[data-layout="vertical"][data-header-position="fixed"] .app-header {
+    position: fixed;
+    z-index: 10;
+}
+#main-wrapper[data-layout="vertical"][data-header-position="fixed"] .body-wrapper > .container-fluid {
+    padding-top: calc(72px + 30px);
+}
