@@ -11,11 +11,10 @@ import java.util.List;
 @Repository
 public interface AccountAdminRepository extends JpaRepository<AccountAdmin, Integer> {
 
-    @Query("SELECT a FROM AccountAdmin a WHERE " +
-            "(:userName IS NULL OR a.userName LIKE %:userName%) AND " +
-            "(:role IS NULL OR a.role Like %:role%) AND " +
-            "(:status IS NULL OR a.status Like %:status%)")
-    List<AccountAdmin> filterByCriteria(@Param("userName") String userName,
-                                        @Param("role") String role,
-                                        @Param("status") String status);
+    @Query("SELECT a FROM AccountAdmin a WHERE (:userName IS NULL OR a.userName LIKE %:userName%) AND (:role IS NULL OR a.role = :role) AND (:status IS NULL OR a.status = :status)")
+    List<AccountAdmin> filterByCriteria(
+            @Param("userName") String userName,
+            @Param("role") String role,
+            @Param("status") String status
+    );
 }

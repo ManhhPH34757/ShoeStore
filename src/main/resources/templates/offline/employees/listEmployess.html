@@ -30,29 +30,44 @@
                         <h3 class="text-center text-danger">Employee Information</h3>
                         <form th:action="@{${employee.id != null ? '/employees/update' : '/employees/create'}}" method="post" th:object="${employee}">
                             <input type="hidden" th:field="*{id}" />
+                            <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger">
+                                <p th:each="error : ${#fields.globalErrors()}" th:text="${error}"></p>
+                            </div>
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group mt-3">
                                         <label>Gender</label> <br>
-                                        <input type="radio" name="gender" value="Male" th:checked="${employee.gender == 'Male'}" > Male
-                                        <input type="radio" name="gender" value="Female" th:checked="${employee.gender == 'Female'}" > FeMale
+                                        <div th:if="${#fields.hasErrors('gender')}" class="alert alert-danger">
+                                            <p th:each="error : ${#fields.errors('gender')}" th:text="${error}"></p>
+                                        </div>
+                                        <input type="radio" th:field="*{gender}" value="Male"> Male
+                                        <input type="radio" th:field="*{gender}" value="Female"> Female
                                     </div>
                                     <div class="form-group mt-3">
                                         <label>Role</label> <br>
-                                        <input type="radio" id="roleAdmin" value="Admin" th:field="*{role}">
+                                        <div th:if="${#fields.hasErrors('role')}" class="alert alert-danger">
+                                            <p th:each="error : ${#fields.errors('role')}" th:text="${error}"></p>
+                                        </div>
+                                        <input type="radio" th:field="*{role}" value="Admin" id="roleAdmin">
                                         <label for="roleAdmin">Admin</label>
-                                        <input type="radio" id="roleEmployee" value="Employee" th:field="*{role}">
+                                        <input type="radio" th:field="*{role}" value="Employee" id="roleEmployee">
                                         <label for="roleEmployee">Employee</label>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group mt-3">
                                         <label>First Name</label>
-                                        <input type="text" class="form-control" name="firstName" th:field="*{firstName}" >
+                                        <div th:if="${#fields.hasErrors('firstName')}" class="alert alert-danger">
+                                            <p th:each="error : ${#fields.errors('firstName')}" th:text="${error}"></p>
+                                        </div>
+                                        <input type="text" class="form-control" th:field="*{firstName}">
                                     </div>
                                     <div class="form-group mt-3">
                                         <label>Last Name</label>
-                                        <input type="text" class="form-control" name="lastName" th:field="*{lastName}" >
+                                        <div th:if="${#fields.hasErrors('lastName')}" class="alert alert-danger">
+                                            <p th:each="error : ${#fields.errors('lastName')}" th:text="${error}"></p>
+                                        </div>
+                                        <input type="text" class="form-control" th:field="*{lastName}">
                                     </div>
                                 </div>
                             </div>
@@ -60,21 +75,33 @@
                                 <div class="col-6">
                                     <div class="form-group mt-3">
                                         <label>Address</label>
-                                        <input type="text" class="form-control" name="address" th:field="*{address}" >
+                                        <div th:if="${#fields.hasErrors('address')}" class="alert alert-danger">
+                                            <p th:each="error : ${#fields.errors('address')}" th:text="${error}"></p>
+                                        </div>
+                                        <input type="text" class="form-control" th:field="*{address}">
                                     </div>
                                     <div class="form-group mt-3">
                                         <label>Phone Number</label>
-                                        <input type="text" class="form-control" name="phoneNumber" th:field="*{phoneNumber}" >
+                                        <div th:if="${#fields.hasErrors('phoneNumber')}" class="alert alert-danger">
+                                            <p th:each="error : ${#fields.errors('phoneNumber')}" th:text="${error}"></p>
+                                        </div>
+                                        <input type="text" class="form-control" th:field="*{phoneNumber}">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group mt-3">
                                         <label>Email</label>
-                                        <input type="text" class="form-control" name="email" th:field="*{email}" >
+                                        <div th:if="${#fields.hasErrors('email')}" class="alert alert-danger">
+                                            <p th:each="error : ${#fields.errors('email')}" th:text="${error}"></p>
+                                        </div>
+                                        <input type="text" class="form-control" th:field="*{email}">
                                     </div>
                                     <div class="form-group mt-3">
                                         <label>Birthday</label>
-                                        <input type="text" class="form-control" name="birthday" th:field="*{birthday}" >
+                                        <div th:if="${#fields.hasErrors('birthday')}" class="alert alert-danger">
+                                            <p th:each="error : ${#fields.errors('birthday')}" th:text="${error}"></p>
+                                        </div>
+                                        <input type="date" class="form-control" th:field="*{birthday}">
                                     </div>
                                 </div>
                             </div>
@@ -82,42 +109,47 @@
                                 <div class="col-6">
                                     <div class="form-group mt-3">
                                         <label for="userName">Username</label>
+                                        <div th:if="${#fields.hasErrors('userName')}" class="alert alert-danger">
+                                            <p th:each="error : ${#fields.errors('userName')}" th:text="${error}"></p>
+                                        </div>
                                         <input type="text" class="form-control" id="userName" th:field="*{userName}">
                                     </div>
-
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group mt-3">
-                                        <label>Trạng Thái</label> <br>
-                                        <input type="radio" id="statusActive" value="Active" th:field="*{status}">
+                                        <label>Status</label> <br>
+                                        <div th:if="${#fields.hasErrors('status')}" class="alert alert-danger">
+                                            <p th:each="error : ${#fields.errors('status')}" th:text="${error}"></p>
+                                        </div>
+                                        <input type="radio" th:field="*{status}" value="Active" id="statusActive">
                                         <label for="statusActive">Active</label>
-                                        <input type="radio" id="statusInactive" value="Inactive" th:field="*{status}">
+                                        <input type="radio" th:field="*{status}" value="Inactive" id="statusInactive">
                                         <label for="statusInactive">Inactive</label>
                                     </div>
                                 </div>
                             </div>
-                            <button class="btn btn-outline-success mt-5" type="submit" th:text="${employee.id == null ? 'ADD' : 'UPDATE'}" >Submit</button>
+                            <button class="btn btn-outline-success mt-5" type="submit" th:text="${employee.id == null ? 'ADD' : 'UPDATE'}">Submit</button>
                         </form>
-<!--                        // filter-->
+                        <!--                        // filter-->
                         <h3 class="text-center text-danger mt-3">Filter Employees</h3>
                         <form action="#" th:action="@{/employees/filter}" method="get" class="mb-4">
                             <div class="row">
                                 <div class="col-md-4">
                                     <input type="text" name="userName" class="form-control" placeholder="Search by Username"
-                                           th:value="${param.userName}" />
+                                           th:value="${userName}" />
                                 </div>
                                 <div class="col-md-4">
                                     <select name="role" class="form-control">
                                         <option value="">Select Role</option>
-                                        <option value="Admin" th:selected="${param.role == 'Admin'}">Admin</option>
-                                        <option value="Employee" th:selected="${param.role == 'Employee'}">Employee</option>
+                                        <option value="Admin" th:selected="${role == 'Admin'}">Admin</option>
+                                        <option value="Employee" th:selected="${role == 'Employee'}">Employee</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4">
                                     <select name="status" class="form-control">
                                         <option value="">Select Status</option>
-                                        <option value="Active" th:selected="${param.status == 'Active'}">Active</option>
-                                        <option value="Inactive" th:selected="${param.status == 'Inactive'}">Inactive</option>
+                                        <option value="Active" th:selected="${status == 'Active'}">Active</option>
+                                        <option value="Inactive" th:selected="${status == 'Inactive'}">Inactive</option>
                                     </select>
                                 </div>
                             </div>
@@ -144,12 +176,13 @@
                                 <td th:text="${em.role}"></td>
                                 <td th:text="${em.status}"></td>
                                 <td>
-                                    <a th:href="@{/employees/edit/{id}(id=${em.id})}" class="btn btn-warning" th:if="${em.id}">Edit</a>
+                                    <a th:href="@{/employees/edit/{id}(id=${em.id})}" class="btn btn-warning" th:if="${em.id}">Details</a>
                                     <a th:href="@{/employees/delete/{id}(id=${em.id})}" class="btn btn-danger" th:if="${em.id}">Delete</a>
                                 </td>
                             </tr>
                             </tbody>
                         </table>
+
                         <div class="text-center">
                             <a class="btn btn-info"
                                th:href="@{/employees/(pageNumber=${pageNumber != null ? pageNumber - 1 : 0}, pageSize=${pageSize})}">

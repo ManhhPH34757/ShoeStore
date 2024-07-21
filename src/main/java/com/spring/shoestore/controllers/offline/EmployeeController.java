@@ -5,6 +5,7 @@ import com.spring.shoestore.entity.AccountAdmin;
 import com.spring.shoestore.entity.Admin;
 import com.spring.shoestore.repo.AccountAdminRepository;
 import com.spring.shoestore.repo.AdminRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,11 +15,13 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.SecureRandom;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -34,7 +37,7 @@ public class EmployeeController {
 
     private final JavaMailSender emailSender;
 
-    private final AtomicInteger counter = new AtomicInteger(39);
+    private final AtomicInteger counter = new AtomicInteger(48);
 
     @Value("${app.default-password}")
     private String defaultPassword;
@@ -95,7 +98,14 @@ public class EmployeeController {
     }
 
     @PostMapping("/create")
-    public String createEmployee(@ModelAttribute("employee") AccountAdminDTO accountAdminDTO) {
+    public String createEmployee(@Valid @ModelAttribute("employee") AccountAdminDTO accountAdminDTO,
+                                 BindingResult bindingResult,
+                                 Model model) {
+//
+//        if (bindingResult.hasErrors()) {
+//            return "offline/employees/listEmployess";
+//        }
+
         Admin admin = new Admin();
         admin.setAdminCode("ADM" + generateAdminCode());
         admin.setFirstName(accountAdminDTO.getFirstName());
@@ -117,8 +127,12 @@ public class EmployeeController {
         accountAdminRepository.save(accountAdmin);
 
         sendAccountCreationEmail(accountAdmin);
+
         return "redirect:/employees/";
     }
+
+
+
 
     private void sendAccountCreationEmail(AccountAdmin accountAdmin) {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -152,7 +166,7 @@ public class EmployeeController {
 
 
     @GetMapping("/delete/{id}")
-    public String deleteEmployee(@PathVariable Integer id, Model model) {
+    public String deleteEmployee(@PathVariable Integer id) {
         accountAdminRepository.deleteById(id);
         adminRepository.deleteById(id);
         return "redirect:/employees/";
@@ -181,6 +195,7 @@ public class EmployeeController {
         accountAdmin.setStatus(accountAdminDTO.getStatus());
         accountAdmin.setRole(accountAdminDTO.getRole());
 
+        assert admin != null;
         adminRepository.save(admin);
         accountAdminRepository.save(accountAdmin);
 
@@ -196,6 +211,10 @@ public class EmployeeController {
     ) {
         List<AccountAdmin> filteredAccounts = accountAdminRepository.filterByCriteria(userName, role, status);
 
+        if (filteredAccounts == null) {
+            filteredAccounts = new ArrayList<>();
+        }
+
         List<AccountAdminDTO> accountAdminDTOList = filteredAccounts.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
@@ -207,7 +226,6 @@ public class EmployeeController {
 
         return "offline/employees/listEmployess";
     }
-
 
     private AccountAdminDTO convertToDTO(AccountAdmin accountAdmin) {
         if (accountAdmin == null) {
