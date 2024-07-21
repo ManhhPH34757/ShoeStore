@@ -101,10 +101,10 @@ public class EmployeeController {
     public String createEmployee(@Valid @ModelAttribute("employee") AccountAdminDTO accountAdminDTO,
                                  BindingResult bindingResult,
                                  Model model) {
-//
-//        if (bindingResult.hasErrors()) {
-//            return "offline/employees/listEmployess";
-//        }
+
+        if (bindingResult.hasErrors()) {
+            return "offline/employees/listEmployess";
+        }
 
         Admin admin = new Admin();
         admin.setAdminCode("ADM" + generateAdminCode());

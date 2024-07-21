@@ -14,7 +14,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AccountAdminDTO {
     // Các trường từ AccountAdmin
-    @NotNull(message = "ID cannot be null")
     private Integer id;
     @NotBlank(message = "Username cannot be empty")
     private String userName;
